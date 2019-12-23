@@ -1,0 +1,169 @@
+<!-- @format -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Ma+Shan+Zheng|Raleway&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Audiowide&display=swap" rel="stylesheet">
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        width: 100vw;
+        background: teal;
+      }
+      .container {
+        height: inherit;
+        display: flex;
+        flex-direction: column;
+      }
+      .title {
+        width: 100vw;
+        height: 200px;
+        line-height: 200px;
+        text-align: center;
+        font-size: 3rem;
+        color: white;
+        font-family: 'Audiowide', cursive;
+        text-shadow: 4px 3px 1px black;
+      }
+      
+      b{
+          color:#df0029;
+          font-size:6rem !important; 
+          font-family: 'Audiowide', cursive;
+          text-shadow: 4px 3px 1px white !important;
+      }
+      .clock {
+        display: flex;
+        flex-direction: row;
+        height: 100vw;
+        /* align-items: center; */
+        margin-top: 85px;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+        position: relative; 
+      }
+      .circle {
+        display: block;
+        width: 300px;
+        height: 300px;
+        border-radius: 300px;
+        background: white;
+        margin: 10px;
+        position: relative;
+      }
+      #day,
+      #hr,
+      #min,
+      #sec {
+        color:#df0029;
+        font-weight: bolder;
+        font-size: 6rem;
+        text-align: center;
+        line-height: 300px;
+        text-shadow: 4px 3px 10px gray;
+        font-family: 'Raleway', sans-serif;
+      }
+      .text {
+        position: absolute;
+        top: 70%;
+        right: 0%;
+        color: #f6511a;
+        font-size: 5rem;
+        font-family: "Ma Shan Zheng", cursive;
+        text-shadow: 3px 3px 0px pink;
+        
+      }
+      .footer{
+          position: absolute;
+          bottom: 5%;
+          color:white;
+          font-size: 2rem;
+          font-family: "Ma Shan Zheng", cursive;
+      }
+      /* 斷點 */
+      @media screen and (max-width: 720px) {
+        .title{
+          margin-top: 50px;
+          font-size: 3rem;
+          line-height: 175px;
+        }
+        b{
+          font-size: 4rem !important;
+        }
+        .clock{
+          margin-top:50px;
+        }
+        .footer{
+          position: relative;
+        }
+}
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="title">COUNTDOWN<b></b></div>
+      <div class="clock">
+        <div class="circle">
+          <div id="day">365</div>
+          <div class="text">Days</div>
+        </div>
+        <div class="circle">
+          <div id="hr">365</div>
+          <div class="text">Hours</div>
+        </div>
+        <div class="circle">
+          <div id="min">365</div>
+          <div class="text">Mins</div>
+        </div>
+        <div class="circle">
+          <div id="sec">365</div>
+          <div class="text">Secs</div>
+        </div>
+        <div class="footer">
+            reirajiang © 2020
+        </div>
+      </div>
+    </div>
+    
+    <script>
+        var sec = 0,
+            min = 0,
+            hr = 0,
+            days = 0;
+
+        function runtime() {
+            var now = new Date();
+            var this_year = now.getFullYear();
+            var next_year = new Date(`January 1,${this_year + 1} 00:00:00`);
+            var t_year = now.getTime();
+            var n_year = next_year.getTime();
+
+            var target = (n_year - t_year) / 1000;
+
+            sec = Math.floor(target % 60);
+            min = Math.floor((target / 60) % 60);
+            hr = Math.floor((target / 60 / 60) % 24);
+            days = Math.floor(target / 60 / 60 / 24);
+
+            sec = sec.length < 2 ? "0" + sec : sec;
+            min = min.length < 2 ? "0" + min : min;
+            hr = hr.length < 2 ? "0" + hr : hr;
+
+            $("#day").text(days);
+            $("#hr").text(hr);
+            $("#min").text(min);
+            $("#sec").text(sec);
+            $('b').text(` ${this_year + 1}`);
+        }
+        setInterval(runtime, 1000);
+    </script>
+  </body>
+</html>
